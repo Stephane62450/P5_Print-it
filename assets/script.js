@@ -59,6 +59,10 @@ function deplacementDroite() {
 }
 
 function deplacementGauche() {
+	if (indexSlide === 0) {
+		indexSlide = +4;
+		dots.children[0].classList.remove("dot_selected");
+	}
 	indexSlide -= 1
 	image.src = `./assets/images/slideshow/${slides[indexSlide].image}`
 	tagLine.innerHTML = slides[indexSlide].tagLine
