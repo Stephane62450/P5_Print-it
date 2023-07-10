@@ -16,22 +16,22 @@ const slides = [
 		"tagLine": "Autocollants <span>avec découpe laser sur mesure</span>"
 	},
 ]
-console.log(slides[0]) // afficher le nombre d'element dans le tableau 
+console.log(slides[0]) // afficher le premier élément du tableau
 
 const arrowLeft = document.querySelector(".arrow_left") // appeler l'element html arrow_left 
-console.log(arrowLeft);
+console.log(arrowLeft); // afficher le contenu dans la console du navigateur
 
 const arrowRight = document.querySelector(".arrow_right") // appeler l'element html arrow_right 
-console.log(arrowRight);
+console.log(arrowRight); // afficher le contenu dans la console du navigateur
 
 const lengthSlides = slides.length // variable est egale a la longueur du tableau
 console.log(slides.length); // afficher la longueur du tableau //
 
 const dots = document.querySelector(".dots") // appeler l'element html dots
-console.log(dots);
+console.log(dots); // afficher le contenu dans la console du navigateur
 
 function genererBullet() {
-	for (let i = 0; i < lengthSlides; i++) { // condition (boucle) tant que i est inferieur a la longueur du tableau incrémenter de 1
+	for (let i = 0; i < lengthSlides; i++) { // Boucle tant que i est inferieur a la longueur du tableau incrémenter de 1
 		const dot = document.createElement("span"); // creer un element html
 		dot.classList.add("dot") // ajouter une nouvelle classe
 		dots.appendChild(dot) // dot est l'enfant de dots
@@ -42,33 +42,35 @@ function genererBullet() {
 genererBullet()
 
 const image = document.querySelector(".banner-img") // appeler l'element html .banner-img
-const tagLine = document.querySelector(".tagLine")
+const tagLine = document.querySelector(".tagLine") // appeler l'element html .tagLine
 //const tagLine2 = document.querySelector("#banner p") = ciblage de l'element parent puis du p 
 let indexSlide = 0 // attribuer la valeur 0
 
 function deplacementDroite() {
-	if (indexSlide === lengthSlides-1) { // si indexslide est egal a la longueur de mon tableau -1 alors indexslide revient a 0
-		indexSlide = -1; // position de indexSlide
-		dots.children[lengthSlides-1].classList.remove("dot_selected"); // retirer la class au 3eme enfant 
+	if (indexSlide === lengthSlides - 1) { // si indexslide est egal a la longueur de mon tableau -1 alors indexslide revient a 0
+		indexSlide = 0; // position de indexSlide
+		dots.children[lengthSlides - 1].classList.remove("dot_selected"); // retirer la class au dernier enfant 
+	} else {
+		indexSlide += 1; // incrémente la valeur de la variable de 1
+		dots.children[indexSlide - 1].classList.remove("dot_selected"); // retire la classe à l'enfant de dots
 	}
-		indexSlide += 1;
-		image.src = `./assets/images/slideshow/${slides[indexSlide].image}`
-		tagLine.innerHTML = slides[indexSlide].tagLine // changer le contenu en html //
-		dots.children[indexSlide].classList.add("dot_selected") // ajoute la classe à l'enfant de dots
-		dots.children[indexSlide -1].classList.remove("dot_selected"); // retire la classe à l'enfant de dots
+	image.src = `./assets/images/slideshow/${slides[indexSlide].image}` // mettre a jour l'attribut src et changer l'image
+	tagLine.innerHTML = slides[indexSlide].tagLine // changer le contenu en html //
+	dots.children[indexSlide].classList.add("dot_selected") // ajoute la classe à l'enfant de dots
 }
 
 function deplacementGauche() {
-	if (indexSlide === 0) {
-		indexSlide = lengthSlides;
-		dots.children[0].classList.remove("dot_selected");
+	if (indexSlide === 0) { //indexslide est strictement egale a 0
+		indexSlide = lengthSlides - 1; // pointer indexslide vers le dernier element de lengthslides
+		dots.children[0].classList.remove("dot_selected"); // retirer la classe a l'enfant dots
+	} else {
+		indexSlide -= 1 // decremente la valeur de la variable de 1
+		dots.children[indexSlide + 1].classList.remove("dot_selected") // supprime la classe à l'élément précédent
 	}
-	indexSlide -= 1
-	image.src = `./assets/images/slideshow/${slides[indexSlide].image}`
-	tagLine.innerHTML = slides[indexSlide].tagLine
-	dots.children[indexSlide].classList.add("dot_selected")
-	dots.children[indexSlide + 1].classList.remove("dot_selected")
-	
+	image.src = `./assets/images/slideshow/${slides[indexSlide].image}` // mettre à jour l'attribut src et changer l'image 
+	tagLine.innerHTML = slides[indexSlide].tagLine // permet de mettre à jour le contenu html 
+	dots.children[indexSlide].classList.add("dot_selected") // ajoute la classe à l'élément actuel
+
 }
-arrowRight.addEventListener("click", deplacementDroite)
-arrowLeft.addEventListener("click", deplacementGauche)
+arrowRight.addEventListener("click", deplacementDroite) // écouteur d'événement au clic sur la flèche droite la fonction est appelée.
+arrowLeft.addEventListener("click", deplacementGauche) // écouteur d'événement au clic sur la flèche gauche la fonction est appelée.
